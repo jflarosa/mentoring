@@ -8,7 +8,7 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "prettier": "prettier './{src}/**/*.{js,jsx,ts,tsx}' --write --cache"
+    "prettier": "prettier './src/**/*.{js,jsx,ts,tsx}' --write --cache"
   },
   "dependencies": {
     "prettier": "^3.8.1",
