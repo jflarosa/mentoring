@@ -1,11 +1,12 @@
 import { PreviewCreativeStatic } from './features/creative-preview/components/PreviewCreativeStatic.tsx';
+import { Box } from '@ui';
 
 function App() {
   return (
-    <div>
-      <PreviewCreativeStatic action='decrement' />
-      <PreviewCreativeStatic step={10} action='increment' />
-    </div>
+    <Box display='flex' gap={10} flexDirection='column'>
+      <PreviewCreativeStatic />
+      <PreviewCreativeStatic />
+    </Box>
   );
 }
 
