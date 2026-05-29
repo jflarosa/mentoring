@@ -1,12 +1,7 @@
-import { PreviewCreativeStatic } from './features/creative-preview/components/PreviewCreativeStatic.tsx';
-import { Box } from '@ui';
+import { Typography } from '@ui';
 
 function App() {
-  return (
-    <Box display='flex' gap={10} flexDirection='column'>
-      <PreviewCreativeStatic />
-    </Box>
-  );
+  return <Typography>Application</Typography>;
 }
 
 export default App;
