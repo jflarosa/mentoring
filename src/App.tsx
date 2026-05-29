@@ -5,7 +5,6 @@ function App() {
   return (
     <Box display='flex' gap={10} flexDirection='column'>
       <PreviewCreativeStatic />
-      <PreviewCreativeStatic />
     </Box>
   );
 }
