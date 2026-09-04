@@ -1,12 +1,18 @@
-import { Typography } from '@ui';
+import { AppBar, Box, Toolbar, Typography } from '@ui';
 import { ModeToggle } from '@features/mode/ModeToggle';
 
 function App() {
   return (
-    <>
-      <Typography>Application</Typography>
-      <ModeToggle />
-    </>
+    <AppBar position='static'>
+      <Toolbar>
+        <Typography variant='h6' component='div' sx={{ flexGrow: 1 }}>
+          Creative Preview
+        </Typography>
+        <Box>
+          <ModeToggle />
+        </Box>
+      </Toolbar>
+    </AppBar>
   );
 }
 
