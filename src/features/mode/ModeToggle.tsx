@@ -1,4 +1,4 @@
-import { FormControlLabel, Switch } from '@ui';
+import { DarkModeIcon, FormControlLabel, LightModeIcon, Switch } from '@ui';
 
 import { useColorMode } from './useColorMode';
 
@@ -12,6 +12,8 @@ export function ModeToggle() {
         <Switch
           checked={isDark}
           onChange={(_, checked) => setMode(checked ? 'dark' : 'light')}
+          icon={<LightModeIcon />}
+          checkedIcon={<DarkModeIcon />}
         />
       }
       label={isDark ? 'Dark mode' : 'Light mode'}
