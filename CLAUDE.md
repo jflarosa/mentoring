@@ -43,7 +43,10 @@ Single-file check while developing: `npx eslint <file>` and
   documentation (props, variants, APIs) applies as-is to the `@ui` components.
 - Barrel `index.ts` files are only used in `src/ui` (the MUI facade). `src/features` and its
   subfolders have no barrel — import directly from the file, e.g.
-  `@features/preview-settings/useOrientation`.
+  `@features/orientation/useOrientation`.
+- One feature folder per preview setting: `src/features/dark-mode` (`useColorMode`,
+  `DarkModeToggle`), `src/features/orientation` (`useOrientation`), `src/features/ratio`
+  (`useRatio`).
 - Global providers live in `src/main.tsx` (`CssBaseline`, `QueryClientProvider`) — add future
   global providers (theme, device context, etc.) there.
 - Data fetching: TanStack Query + Axios against internal APIs (dashboard API).

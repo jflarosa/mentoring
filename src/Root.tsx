@@ -1,6 +1,6 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { CssBaseline, ThemeProvider, createTheme } from '@ui';
-import { useColorMode } from '@features/preview-settings/useColorMode';
+import { useColorMode } from '@features/dark-mode/useColorMode';
 
 import App from './App.tsx';
 
