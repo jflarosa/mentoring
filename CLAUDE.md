@@ -1,0 +1,52 @@
+# CLAUDE.md
+
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this
+repository.
+
+## Project context
+
+Technical mentoring project. Goal: build a public **creative preview interface** (playable ads,
+MRAID, etc.) so clients can validate/reject creatives made by the creative developers / crea
+teams, instead of the current raw shared link (see README.md).
+
+See [`.claude/context/business-context.md`](.claude/context/business-context.md) for the full
+domain context before designing anything related to the preview feature.
+
+## Commands
+
+```bash
+npm run dev       # Vite dev server
+npm run build     # tsc -b (type-check) then production build
+npm run preview   # serve production build locally
+npm run lint       # ESLint
+npm run prettier   # format src/**/*.{js,jsx,ts,tsx}
+```
+
+No test framework is installed yet.
+
+Single-file check while developing: `npx eslint <file>` and
+`npx tsc --noEmit -p tsconfig.app.json`.
+
+## Architecture
+
+- Vite + React 19 + TypeScript, React Compiler enabled via `@rolldown/plugin-babel`
+  (`vite.config.ts`) — this is expected to slow down dev/build.
+- Path aliases defined in both `vite.config.ts` and `tsconfig.app.json` (keep them in sync):
+  - `@ui` → `src/ui`
+  - `@features` → `src/features` (not created yet)
+- **MUI facade (`src/ui`)**: each MUI component is re-exported in its own file (e.g.
+  `src/ui/Button.tsx` → `export const Button = MuiButton;`), barreled through `src/ui/index.ts`.
+  App code imports from `@ui`, never directly from `@mui/material`. Adding a new MUI component
+  means: create the re-export file in `src/ui/`, add it to `src/ui/index.ts`.
+- Global providers live in `src/main.tsx` (`CssBaseline`, `QueryClientProvider`) — add future
+  global providers (theme, device context, etc.) there.
+- Data fetching: TanStack Query + Axios against internal APIs (dashboard API).
+- App state that should be shareable via link (ratio, orientation, ...) goes in the URL via
+  `nuqs`, not in React state/context.
+
+## Code style
+
+- Prettier (`.prettierrc`): `printWidth: 80`, single quotes (incl. JSX), semicolons,
+  `bracketSameLine: true`, `arrowParens: always`. Run `npm run prettier` rather than hand-formatting.
+- ESLint flat config (`eslint.config.js`): typescript-eslint, eslint-plugin-react-hooks,
+  eslint-plugin-react-refresh (Vite mode).

@@ -1,75 +1,67 @@
-# React + TypeScript + Vite
+# Creative Preview — Adikteev
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern web interface to preview and share creatives (playable, MRAID, etc.) built by
+Adikteev's creative developers / crea teams with clients, so they can validate or reject them.
 
-Currently, two official plugins are available:
+> This repository is a technical mentoring project, built step by step.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Context
 
-## React Compiler
+Creatives are currently shared with clients via a raw link to a generic execution engine, e.g.:
 
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
-
-Note: This will impact Vite dev & build performances.
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```
+https://cdn-creatives.adikteev.com/Creatives/demoLink/MLEngine/index.html?PLE_Phaser_Vite/creative-11a4d96e.min.js
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+This works but offers no review experience.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Goal
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+Build a preview interface that:
+
+- runs a creative's JS bundle (same kind as the one loaded via the `MLEngine` link today)
+- lets you pick a device (phone brand/model, screen size)
+- lets you toggle orientation (portrait / landscape)
+- supports dark / light mode
+- lets the client validate or reject the creative
+
+## Stack
+
+React 19 + TypeScript, Vite (React Compiler enabled), MUI (re-exported via `@ui`), TanStack
+Query + Axios, [nuqs](https://nuqs.dev/) (URL query params as state), ESLint + Prettier.
+
+### Path aliases
+
+- `@ui` → `src/ui` (MUI components, re-exported)
+- `@features` → `src/features` (business features)
+
+## Scripts
+
+```bash
+npm run dev       # start dev server
+npm run build     # type-check + production build
+npm run preview   # serve production build locally
+npm run lint       # lint
+npm run prettier   # format source
 ```
+
+## Roadmap
+
+v1 (start simple, inspired by [craftsmanplus](https://play.preview.craftsmanplus.com/)):
+
+- [ ] Load a creative JS bundle (playable / MRAID) in an isolated environment
+- [ ] Ratio selector
+- [ ] Orientation toggle
+- [ ] QR code to open the preview on a mobile device
+- [ ] State (ratio, orientation, ...) shared via URL query params (`nuqs`)
+
+Later:
+
+- [ ] Device selector (brand / model / screen size)
+- [ ] Dark / light mode
+- [ ] Client validate / reject flow
+
+## Claude Code context
+
+See [`CLAUDE.md`](./CLAUDE.md) and [`.claude/context`](./.claude/context) for the business/technical
+context used to work on this repo with Claude Code.
