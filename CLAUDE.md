@@ -30,7 +30,8 @@ Single-file check while developing: `npx eslint <file>` and
 ## Architecture
 
 - Vite + React 19 + TypeScript, React Compiler enabled via `@rolldown/plugin-babel`
-  (`vite.config.ts`) — this is expected to slow down dev/build.
+  (`vite.config.ts`) — this is expected to slow down dev/build. No manual `useMemo`/`useCallback`:
+  the compiler handles memoization.
 - Path aliases defined in both `vite.config.ts` and `tsconfig.app.json` (keep them in sync):
   - `@ui` → `src/ui`
   - `@features/*` → `src/features/*` (no bare `@features` import — no barrel index there, see below)
