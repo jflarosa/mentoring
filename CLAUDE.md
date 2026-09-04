@@ -34,10 +34,12 @@ Single-file check while developing: `npx eslint <file>` and
 - Path aliases defined in both `vite.config.ts` and `tsconfig.app.json` (keep them in sync):
   - `@ui` → `src/ui`
   - `@features` → `src/features` (not created yet)
-- **MUI facade (`src/ui`)**: each MUI component is re-exported in its own file (e.g.
-  `src/ui/Button.tsx` → `export const Button = MuiButton;`), barreled through `src/ui/index.ts`.
-  App code imports from `@ui`, never directly from `@mui/material`. Adding a new MUI component
-  means: create the re-export file in `src/ui/`, add it to `src/ui/index.ts`.
+- **UI library: MUI**, used through the `src/ui` abstraction — never import from `@mui/material`
+  (or `@mui/icons-material`) directly in app code, always import from `@ui`. Each MUI component is
+  re-exported in its own file (e.g. `src/ui/Button.tsx` → `export const Button = MuiButton;`),
+  barreled through `src/ui/index.ts`. Adding a new MUI component means: create the re-export file
+  in `src/ui/`, add it to `src/ui/index.ts`. Since `@ui` re-exports are plain aliases, MUI's own
+  documentation (props, variants, APIs) applies as-is to the `@ui` components.
 - Global providers live in `src/main.tsx` (`CssBaseline`, `QueryClientProvider`) — add future
   global providers (theme, device context, etc.) there.
 - Data fetching: TanStack Query + Axios against internal APIs (dashboard API).
