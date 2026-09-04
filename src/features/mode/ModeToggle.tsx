@@ -1,4 +1,4 @@
-import { ToggleButton } from '@ui';
+import { FormControlLabel, Switch } from '@ui';
 
 import { useColorMode } from './useColorMode';
 
@@ -7,11 +7,14 @@ export function ModeToggle() {
   const isDark = mode === 'dark';
 
   return (
-    <ToggleButton
-      value='dark'
-      selected={isDark}
-      onChange={() => setMode(isDark ? 'light' : 'dark')}>
-      {isDark ? 'Dark mode' : 'Light mode'}
-    </ToggleButton>
+    <FormControlLabel
+      control={
+        <Switch
+          checked={isDark}
+          onChange={(_, checked) => setMode(checked ? 'dark' : 'light')}
+        />
+      }
+      label={isDark ? 'Dark mode' : 'Light mode'}
+    />
   );
 }
