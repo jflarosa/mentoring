@@ -1,6 +1,6 @@
 # CI/CD Documentation
 
-How `mentoring` gets built and deployed. The pipeline is a trimmed-down port of
+How `creative-viewer` gets built and deployed. The pipeline is a trimmed-down port of
 the `dsp-dashboard` one: **staging only** — no production environment and no
 ephemeral (per-PR) environments.
 
@@ -9,7 +9,7 @@ ephemeral (per-PR) environments.
 Every push to `master` builds a Docker image and rolls it out to the shared
 staging environment:
 
-<https://mentoring.dsp-stage.adikteev.com>
+<https://creative-viewer.dsp-stage.adikteev.com>
 
 A redeploy can also be triggered by hand from the
 `Deployment Staging` workflow (`workflow_dispatch`).
@@ -21,7 +21,7 @@ that is what makes the fresh image actually get pulled.
 
 ## Build
 
-`mentoring.Dockerfile` is a two-stage build:
+`creative-viewer.Dockerfile` is a two-stage build:
 
 1. `node:24-alpine` runs `npm ci` then `npm run build -- --mode $environment`
    (`environment` defaults to `staging`).
@@ -35,7 +35,7 @@ so that file holds public configuration only, never a secret.
 
 ## Infrastructure
 
-`infrastructure/mentoring/` is a Helm chart with three templates:
+`infrastructure/creative-viewer/` is a Helm chart with three templates:
 
 | Template             | Resource                   | Namespace      |
 | -------------------- | -------------------------- | -------------- |
@@ -44,7 +44,7 @@ so that file holds public configuration only, never a secret.
 | `ingress-route.yaml` | Traefik `IngressRoute`     | `loadbalancer` |
 
 Values are in `chart-values/staging.yaml`. The host
-`mentoring.dsp-stage.adikteev.com` is a sub-domain of `dsp-stage` on purpose:
+`creative-viewer.dsp-stage.adikteev.com` is a sub-domain of `dsp-stage` on purpose:
 the existing `wildcard-dsp-stage-adikteev-com-tls` certificate already covers
 it, so no new certificate is needed.
 
@@ -56,9 +56,9 @@ Deploying by hand is the same command the workflow runs:
 ```sh
 helm upgrade --install --debug \
   --namespace staging \
-  --values ./infrastructure/mentoring/chart-values/staging.yaml \
-  mentoring \
-  ./infrastructure/mentoring \
+  --values ./infrastructure/creative-viewer/chart-values/staging.yaml \
+  creative-viewer \
+  ./infrastructure/creative-viewer \
   --set-string tag=latest
 ```
 
@@ -67,7 +67,7 @@ helm upgrade --install --debug \
 ### `build.yaml` — Build & Push Docker Image
 
 Reusable workflow (`workflow_call` only). Builds the image and pushes it to
-`registry.adikteev.io/mentoring-staging`. Inputs: `docker-file`,
+`registry.adikteev.io/creative-viewer-staging`. Inputs: `docker-file`,
 `docker-image-name`, `environment`, `tag`.
 
 ### `staging-deployment.yaml` — Deployment Staging

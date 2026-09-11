@@ -14,8 +14,8 @@ jobs:
     name: Build [staging]
     uses: ./.github/workflows/build.yaml
     with:
-      docker-file: mentoring.Dockerfile
-      docker-image-name: mentoring-staging
+      docker-file: creative-viewer.Dockerfile
+      docker-image-name: creative-viewer-staging
       tag: latest
       environment: staging
     secrets: inherit
@@ -31,8 +31,8 @@ jobs:
         run: |
           helm upgrade --install --debug \
             --namespace staging \
-            --values ./infrastructure/mentoring/chart-values/staging.yaml \
-            mentoring \
-            ./infrastructure/mentoring \
+            --values ./infrastructure/creative-viewer/chart-values/staging.yaml \
+            creative-viewer \
+            ./infrastructure/creative-viewer \
             --set-string tag=latest
 

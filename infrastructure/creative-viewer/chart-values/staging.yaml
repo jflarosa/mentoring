@@ -1,6 +1,6 @@
-# Mentoring Staging values
+# Creative Viewer Staging values
 
-name: mentoring
+name: creative-viewer
 
 product: infrastructure
 service: platform
@@ -9,7 +9,7 @@ component: k8s_staging
 pod:
   replicas: 1
   image:
-    path: registry.adikteev.io/mentoring-staging
+    path: registry.adikteev.io/creative-viewer-staging
 
   requests:
     cpu: "100m"
@@ -18,7 +18,7 @@ pod:
 tag: latest
 
 ingress:
-  name: mentoring-staging-ingress
+  name: creative-viewer-staging-ingress
   # Sub-domain of dsp-stage so the existing wildcard certificate covers it.
-  host: mentoring.dsp-stage.adikteev.com
+  host: creative-viewer.dsp-stage.adikteev.com
   tls: wildcard-dsp-stage-adikteev-com-tls

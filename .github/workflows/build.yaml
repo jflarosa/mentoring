@@ -1,5 +1,5 @@
 # Build & Push Docker Image
-# Reusable workflow: builds the mentoring image and pushes it to the Adikteev
+# Reusable workflow: builds the creative-viewer image and pushes it to the Adikteev
 # registry. Called by staging-deployment.yaml.
 name: Build & Push Docker Image
 on:
@@ -7,10 +7,10 @@ on:
     inputs:
       docker-file:
         type: string
-        default: mentoring.Dockerfile
+        default: creative-viewer.Dockerfile
       docker-image-name:
         type: string
-        default: mentoring-staging
+        default: creative-viewer-staging
       environment:
         type: string
         default: staging

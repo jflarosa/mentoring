@@ -1,6 +1,7 @@
+# Note: infrastructure/ must stay in the build context — the Dockerfile copies
+# infrastructure/nginx/default.conf into the nginx stage.
 node_modules
 dist
 .git
 .github
-infrastructure
 *.log
