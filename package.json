@@ -8,6 +8,7 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
+    "test": "vitest run",
     "prettier": "prettier './src/**/*.{js,jsx,ts,tsx}' --write --cache"
   },
   "dependencies": {
@@ -18,6 +19,7 @@
     "@mui/material": "^9.0.0",
     "@tanstack/react-query": "^5.100.14",
     "axios": "^1.16.1",
+    "he": "^1.2.0",
     "nuqs": "^2.10.1",
     "prettier": "^3.8.1",
     "react": "^19.2.4",
@@ -29,6 +31,7 @@
     "@rolldown/plugin-babel": "^0.2.1",
     "@tanstack/eslint-plugin-query": "^5.100.14",
     "@types/babel__core": "^7.20.5",
+    "@types/he": "^1.2.3",
     "@types/node": "^24.12.0",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
@@ -40,6 +43,7 @@
     "globals": "^17.4.0",
     "typescript": "~5.9.3",
     "typescript-eslint": "^8.57.0",
-    "vite": "^8.0.1"
+    "vite": "^8.0.1",
+    "vitest": "^5.0.0"
   }
 }

@@ -19,10 +19,14 @@ npm run dev       # Vite dev server
 npm run build     # tsc -b (type-check) then production build
 npm run preview   # serve production build locally
 npm run lint       # ESLint
+npm run test       # Vitest, run once (co-located *.test.ts files)
 npm run prettier   # format src/**/*.{js,jsx,ts,tsx}
 ```
 
-No test framework is installed yet.
+Test framework: Vitest, configured in `vite.config.ts` (`test` block, shares the same
+`resolve.alias` as the app — no separate config file). Tests are co-located next to the code they
+cover (e.g. `orientRatio.ts` → `orientRatio.test.ts`), node environment by default; only add
+`jsdom` if a test needs the DOM.
 
 Single-file check while developing: `npx eslint <file>` and
 `npx tsc --noEmit -p tsconfig.app.json`.
