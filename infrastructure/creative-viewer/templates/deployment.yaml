@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.name }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: {{ .Values.name }}
+spec:
+  replicas: {{ .Values.pod.replicas }}
+  selector:
+    matchLabels:
+      app: {{ .Values.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.name }}
+        version: {{ quote .Release.Revision }}
+    spec:
+      containers:
+        - name: {{ .Values.name }}
+          image: {{ .Values.pod.image.path }}:{{ .Values.tag }}
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
+          resources:
+            requests:
+              memory: {{ .Values.pod.requests.memory }}
+              cpu: {{ .Values.pod.requests.cpu }}
+      # Mirrors the dsp-dashboard chart: the staging nodes carry these taints.
+      tolerations:
+        - effect: NoSchedule
+          key: product
+          operator: Equal
+          value: {{ .Values.product }}
+        - effect: NoSchedule
+          key: service
+          operator: Equal
+          value: {{ .Values.service }}
+        - effect: NoSchedule
+          key: component
+          operator: Equal
+          value: {{ .Values.component }}
+        - effect: NoSchedule
+          key: environment
+          operator: Equal
+          value: production

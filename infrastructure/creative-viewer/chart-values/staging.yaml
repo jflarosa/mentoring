@@ -1,0 +1,24 @@
+# Creative Viewer Staging values
+
+name: creative-viewer
+
+product: infrastructure
+service: platform
+component: k8s_staging
+
+pod:
+  replicas: 1
+  image:
+    path: registry.adikteev.io/creative-viewer-staging
+
+  requests:
+    cpu: "100m"
+    memory: "32Mi"
+
+tag: latest
+
+ingress:
+  name: creative-viewer-staging-ingress
+  # Sub-domain of dsp-stage so the existing wildcard certificate covers it.
+  host: creative-viewer.dsp-stage.adikteev.com
+  tls: wildcard-dsp-stage-adikteev-com-tls

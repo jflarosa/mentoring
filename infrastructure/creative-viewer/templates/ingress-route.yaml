@@ -1,0 +1,26 @@
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: {{ .Values.ingress.name }}
+  namespace: loadbalancer
+  labels:
+    app: {{ .Values.ingress.name }}
+  annotations:
+    # The staging route is permanent: a `helm uninstall` must not take the
+    # hostname down with it.
+    "helm.sh/resource-policy": "keep"
+    {{- if .Values.ingress.public }}
+    "kubernetes.io/ingress.class": "traefik-public"
+    {{- end }}
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`{{ .Values.ingress.host }}`)
+      kind: Rule
+      services:
+        - name: {{ .Values.name }}
+          port: 80
+          namespace: {{ .Release.Namespace }}
+  tls:
+    secretName: {{ .Values.ingress.tls }}
