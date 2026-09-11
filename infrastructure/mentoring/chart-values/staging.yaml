@@ -1,0 +1,24 @@
+# Mentoring Staging values
+
+name: mentoring
+
+product: infrastructure
+service: platform
+component: k8s_staging
+
+pod:
+  replicas: 1
+  image:
+    path: registry.adikteev.io/mentoring-staging
+
+  requests:
+    cpu: "100m"
+    memory: "32Mi"
+
+tag: latest
+
+ingress:
+  name: mentoring-staging-ingress
+  # Sub-domain of dsp-stage so the existing wildcard certificate covers it.
+  host: mentoring.dsp-stage.adikteev.com
+  tls: wildcard-dsp-stage-adikteev-com-tls

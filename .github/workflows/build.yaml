@@ -1,0 +1,41 @@
+# Build & Push Docker Image
+# Reusable workflow: builds the mentoring image and pushes it to the Adikteev
+# registry. Called by staging-deployment.yaml.
+name: Build & Push Docker Image
+on:
+  workflow_call:
+    inputs:
+      docker-file:
+        type: string
+        default: mentoring.Dockerfile
+      docker-image-name:
+        type: string
+        default: mentoring-staging
+      environment:
+        type: string
+        default: staging
+      tag:
+        description: 'Tag version'
+        required: true
+        type: string
+
+jobs:
+  build:
+    name: Build & Push
+    runs-on: gha-rtg-adikteev-runners
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Build docker
+        run: |
+          docker build . \
+          --platform linux/amd64 \
+          --tag registry.adikteev.io/${{ inputs.docker-image-name }}:${{ inputs.tag }} \
+          --file ${{ inputs.docker-file }} \
+          --build-arg environment=${{ inputs.environment }}
+
+      - name: Push docker image
+        run: |
+          docker push registry.adikteev.io/${{ inputs.docker-image-name }}:${{ inputs.tag }}

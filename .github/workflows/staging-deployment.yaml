@@ -1,0 +1,38 @@
+# Deployment Staging
+# Builds the staging image on every push to master and rolls it out with Helm
+# in the `staging` namespace.
+name: Deployment Staging
+
+on:
+  push:
+    branches:
+      - master
+  workflow_dispatch:
+
+jobs:
+  docker-build-and-push:
+    name: Build [staging]
+    uses: ./.github/workflows/build.yaml
+    with:
+      docker-file: mentoring.Dockerfile
+      docker-image-name: mentoring-staging
+      tag: latest
+      environment: staging
+    secrets: inherit
+
+  deployment:
+    name: Deploy [staging]
+    runs-on: gha-rtg-adikteev-runners
+    needs: [docker-build-and-push]
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Execute Helm Deployment Staging
+        run: |
+          helm upgrade --install --debug \
+            --namespace staging \
+            --values ./infrastructure/mentoring/chart-values/staging.yaml \
+            mentoring \
+            ./infrastructure/mentoring \
+            --set-string tag=latest
+
